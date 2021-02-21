@@ -11,7 +11,7 @@ import {
   Question,
   RouterLink,
 } from '../styles/auth'
-import firebaseApp from '../firebase'
+import { createUser } from '../firebase/firebaseAuth'
 import useInput from '../hooks/useInput'
 
 const Register: React.FC = () => {
@@ -23,7 +23,7 @@ const Register: React.FC = () => {
   } = useInput('')
   const notify = (message: string) => toast.error(message)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (confirmPassword !== password) {
       notify('Password does not match')
@@ -33,12 +33,7 @@ const Register: React.FC = () => {
       notify("Don't leave empty fields!")
       return
     }
-    firebaseApp
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch((onError) => {
-        notify(onError.message)
-      })
+    createUser(email, password)
   }
 
   return (

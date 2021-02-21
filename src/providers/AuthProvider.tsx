@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
-import firebaseApp from '../firebase'
+import { auth } from '../firebase/firebase'
 
 export function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined)
@@ -27,12 +27,10 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    const unsubscribeFromAuth = firebaseApp
-      .auth()
-      .onAuthStateChanged((currentUser) => {
-        setUser(currentUser)
-        setLoading(false)
-      })
+    const unsubscribeFromAuth = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser)
+      setLoading(false)
+    })
 
     return () => unsubscribeFromAuth()
   }, [])

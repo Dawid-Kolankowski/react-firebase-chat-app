@@ -19,7 +19,7 @@ const PublicRoute = ({
   ...rest
 }: IPublicRouteProps) => {
   const { user } = AuthContext()
-  console.log(user)
+
   return (
     <Route
       {...rest}

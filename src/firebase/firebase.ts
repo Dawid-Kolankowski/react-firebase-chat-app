@@ -2,6 +2,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import 'firebase/storage'
 
 export const provider = new firebase.auth.GoogleAuthProvider()
 
@@ -14,4 +15,6 @@ const firebaseApp = firebase.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 })
 
-export default firebaseApp
+export const firestore = firebaseApp.firestore()
+export const auth = firebaseApp.auth()
+export const storage = firebaseApp.storage()

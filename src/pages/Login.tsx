@@ -14,7 +14,7 @@ import {
   RouterLink,
 } from '../styles/auth'
 import { StyledToastContainer } from '../styles/components'
-import firebaseApp, { provider } from '../firebase'
+import { signInWithGoogle, signInWithEmail } from '../firebase/firebaseAuth'
 
 const Login: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
@@ -28,12 +28,7 @@ const Login: React.FC = () => {
   ) => {
     event.preventDefault()
     setLoadingGoogle(true)
-    await firebaseApp
-      .auth()
-      .signInWithPopup(provider)
-      .catch((error) => {
-        notify(error)
-      })
+    await signInWithGoogle()
     setLoadingGoogle(false)
   }
 
@@ -45,12 +40,7 @@ const Login: React.FC = () => {
       notify("Password or email can't be empty")
       return
     }
-    await firebaseApp
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        notify(error.message)
-      })
+    await signInWithEmail(email, password)
     setLoadingEmail(false)
   }
   return (
