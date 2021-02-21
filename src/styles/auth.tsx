@@ -15,6 +15,7 @@ export const Form = styled.form`
   padding: 3rem;
   background: white;
   border-radius: 1rem;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 `
 
 export const Label = styled.label`
@@ -59,6 +60,15 @@ export const Button = styled.button`
   width: 100%;
   margin-bottom: 1rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  :hover {
+    cursor: pointer;
+  }
+  :disabled {
+    cursor: wait;
+  }
+  :focus {
+    outline: none;
+  }
 `
 export const Question = styled.div`
   text-align: right;

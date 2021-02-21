@@ -82,7 +82,6 @@ const Register: React.FC = () => {
         <Button type="submit">Sign Up</Button>
 
         <Question>
-          {' '}
           Already have an account? <RouterLink to="/">Login</RouterLink>
         </Question>
       </Form>

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled, { keyframes } from 'styled-components'
 import { toast } from 'react-toastify'
+import { Spinner3 } from '@styled-icons/evil'
 import useInput from '../hooks/useInput'
-
 import {
   Container,
   Form,
@@ -13,32 +14,44 @@ import {
   RouterLink,
 } from '../styles/auth'
 import { StyledToastContainer } from '../styles/components'
-
 import firebaseApp, { provider } from '../firebase'
 
 const Login: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
   const { value: password, onChange: onChangePassword } = useInput('')
+  const [loadingGoogle, setLoadingGoogle] = useState<boolean>(false)
+  const [loadingEmail, setLoadingEmail] = useState<boolean>(false)
   const notify = (message: string) => toast.error(message)
 
-  const logInWithGoogle = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const logInWithGoogle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault()
-    firebaseApp
+    setLoadingGoogle(true)
+    await firebaseApp
       .auth()
       .signInWithPopup(provider)
       .catch((error) => {
         notify(error)
       })
+    setLoadingGoogle(false)
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    firebaseApp
+    setLoadingEmail(true)
+    if (!password || !email) {
+      setLoadingEmail(false)
+      notify("Password or email can't be empty")
+      return
+    }
+    await firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch((error) => {
         notify(error.message)
       })
+    setLoadingEmail(false)
   }
   return (
     <Container>
@@ -67,13 +80,19 @@ const Login: React.FC = () => {
             placeholder="Password"
           />
         </Label>
-        <Button type="submit">Sign In</Button>
+        <Button type="submit">
+          {' '}
+          {loadingEmail ? <ButtonSpinner /> : 'Sign In'}
+        </Button>
 
-        <Button type="button" onClick={logInWithGoogle}>
-          Sign in with google
+        <Button
+          disabled={loadingGoogle}
+          type="button"
+          onClick={logInWithGoogle}
+        >
+          {loadingGoogle ? <ButtonSpinner /> : 'Sign in with google'}
         </Button>
         <Question>
-          {' '}
           Don&lsquo;t have an account?{' '}
           <RouterLink to="/Register">Register</RouterLink>
         </Question>
@@ -83,3 +102,18 @@ const Login: React.FC = () => {
 }
 
 export default Login
+
+const spin = keyframes`
+ 0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }`
+
+const ButtonSpinner = styled(Spinner3)`
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: ${spin} 2s linear infinite;
+  color: white;
+`
