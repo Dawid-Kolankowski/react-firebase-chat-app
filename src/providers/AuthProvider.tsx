@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
 import { auth } from '../firebase/firebase'
+import { createUserProfileDoc } from '../firebase/firebaseUser'
 
 export function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined)
@@ -30,6 +31,7 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
     const unsubscribeFromAuth = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser)
       setLoading(false)
+      currentUser ? createUserProfileDoc(currentUser) : null
     })
 
     return () => unsubscribeFromAuth()
