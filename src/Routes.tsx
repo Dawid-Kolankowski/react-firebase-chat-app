@@ -2,14 +2,14 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import { AuthContext } from './providers/AuthProvider'
+import { useAuth } from './providers/AuthProvider'
 import Spinner from './components/Spinner'
 import PrivateRoute from './auth/PrivateRoute'
 import PublicRoute from './auth/PublicRoute'
-import Chat from './pages/Chat'
+import Chat from './pages/Chat/Chat'
 
 function Routes() {
-  const { loading } = AuthContext()
+  const { loading } = useAuth()
 
   return (
     <Router>

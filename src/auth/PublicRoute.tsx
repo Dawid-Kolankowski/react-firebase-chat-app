@@ -6,7 +6,7 @@ import {
   RouteComponentProps,
   RouteProps,
 } from 'react-router-dom'
-import { AuthContext } from '../providers/AuthProvider'
+import { useAuth } from '../providers/AuthProvider'
 
 interface IPublicRouteProps extends RouteProps {
   component: React.ComponentType<RouteComponentProps>
@@ -18,7 +18,7 @@ const PublicRoute = ({
   restricted,
   ...rest
 }: IPublicRouteProps) => {
-  const { user } = AuthContext()
+  const { user } = useAuth()
 
   return (
     <Route

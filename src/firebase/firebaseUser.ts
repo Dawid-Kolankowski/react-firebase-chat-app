@@ -6,6 +6,7 @@ export const createUserProfileDoc = async (user: firebase.User) => {
 
   const userRef = firestore.doc(`users/${user.uid}`)
   const snapshot = await userRef.get()
+  console.log(snapshot.data())
   if (!snapshot.exists) {
     const createdAt = new Date()
     const { email, photoURL } = user
@@ -20,8 +21,14 @@ export const createUserProfileDoc = async (user: firebase.User) => {
   }
 }
 
-export const getUserDoc = async (uid: string) => {
+export const getUserDoc = async (
+  uid: string,
+  cb: React.Dispatch<
+    React.SetStateAction<firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | null>
+  >,
+) => {
   if (!uid) return null
   const user = await firestore.collection('users').doc(uid)
-  return user
+  cb(user)
+  return null
 }

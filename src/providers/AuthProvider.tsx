@@ -21,7 +21,7 @@ type AuthProviderType = {
 }
 const [useAuth, CtxProvider] = createCtx<AuthProviderType>()
 
-export { useAuth as AuthContext }
+export { useAuth }
 
 export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [user, setUser] = useState<firebase.User | null>(null)

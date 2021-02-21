@@ -7,7 +7,7 @@ import {
   RouteProps,
 } from 'react-router-dom'
 
-import { AuthContext } from '../providers/AuthProvider'
+import { useAuth } from '../providers/AuthProvider'
 
 interface IPrivateRouteProps extends RouteProps {
   component: React.ComponentType<RouteComponentProps>
@@ -17,7 +17,7 @@ const PrivateRoute = ({
   component: RouteComponent,
   ...rest
 }: IPrivateRouteProps) => {
-  const { user } = AuthContext()
+  const { user } = useAuth()
 
   return (
     <Route
