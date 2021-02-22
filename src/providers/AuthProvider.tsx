@@ -17,7 +17,6 @@ export function createCtx<ContextType>() {
 type AuthProviderType = {
   user: firebase.User | null
   loading: boolean
-  setLoading: (value: boolean) => void
 }
 const [useAuth, CtxProvider] = createCtx<AuthProviderType>()
 
@@ -37,7 +36,5 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
     return () => unsubscribeFromAuth()
   }, [])
 
-  return (
-    <CtxProvider value={{ user, loading, setLoading }}>{children}</CtxProvider>
-  )
+  return <CtxProvider value={{ user, loading }}>{children}</CtxProvider>
 }

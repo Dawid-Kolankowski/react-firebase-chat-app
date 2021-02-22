@@ -11,8 +11,9 @@ import {
   Question,
   RouterLink,
 } from '../styles/auth'
-import { createUser } from '../firebase/firebaseAuth'
+
 import useInput from '../hooks/useInput'
+import { auth } from '../firebase/firebase'
 
 const Register: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
@@ -33,7 +34,9 @@ const Register: React.FC = () => {
       notify("Don't leave empty fields!")
       return
     }
-    createUser(email, password)
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .catch((error) => notify(error.message))
   }
 
   return (

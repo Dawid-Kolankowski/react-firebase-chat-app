@@ -12,7 +12,7 @@ const Container = styled.div`
   background-color: white;
   height: 90%;
   min-width: 320px;
-  border-left: 2px solid rgba(51, 49, 54, 0.3);
-  border-right: 2px solid rgba(51, 49, 54, 0.3);
+  border-left: 2px solid rgba(51, 49, 54, 0.1);
+  border-right: 2px solid rgba(51, 49, 54, 0.1);
   padding: 1rem;
 `

@@ -14,7 +14,7 @@ import {
   RouterLink,
 } from '../styles/auth'
 import { StyledToastContainer } from '../styles/components'
-import { signInWithGoogle, signInWithEmail } from '../firebase/firebaseAuth'
+import { provider, auth } from '../firebase/firebase'
 
 const Login: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
@@ -23,13 +23,14 @@ const Login: React.FC = () => {
   const [loadingEmail, setLoadingEmail] = useState<boolean>(false)
   const notify = (message: string) => toast.error(message)
 
-  const logInWithGoogle = async (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const logInWithGoogle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     setLoadingGoogle(true)
-    await signInWithGoogle()
-    setLoadingGoogle(false)
+
+    auth.signInWithPopup(provider).catch((error) => {
+      notify(error.message)
+      setLoadingGoogle(false)
+    })
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,8 +41,10 @@ const Login: React.FC = () => {
       notify("Password or email can't be empty")
       return
     }
-    await signInWithEmail(email, password)
-    setLoadingEmail(false)
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      notify(error.message)
+      setLoadingEmail(false)
+    })
   }
   return (
     <Container>

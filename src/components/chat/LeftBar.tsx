@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import firebase from 'firebase/app'
 import UserInfo from './UserInfo'
+import { useAuth } from '../../providers/AuthProvider'
+import { getUserDoc } from '../../firebase/firebaseUser'
 
 const LeftBar = () => {
+  const { user } = useAuth()
+  const [userDoc, setUserDoc] = useState<
+    firebase.firestore.DocumentData | null | undefined
+  >(null)
+
+  useEffect(() => {
+    async function getDoc() {
+      const doc = await getUserDoc(user!.uid)
+      setUserDoc(doc)
+    }
+    getDoc()
+  }, [user])
   return (
     <Container>
-      <UserInfo />
+      {userDoc ? <UserInfo userDoc={userDoc} /> : null}aaaaaaa
     </Container>
   )
 }
