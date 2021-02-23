@@ -1,41 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
-import {
-  DotsHorizontalTriple,
-  Close,
-  ArrowRight,
-} from '@styled-icons/zondicons'
+import React, { useEffect, useRef } from 'react'
+import styled, { css } from 'styled-components'
+import { Close, ArrowRight, UserAdd } from '@styled-icons/zondicons'
 import { auth } from '../../firebase/firebase'
+import useHideOnLostFocus from '../../hooks/useHideOnLostFocus'
 
 interface IDropdownTypes {
   switchMenu: () => void
 }
 
 const DropdownMenu: React.FC<IDropdownTypes> = ({ switchMenu }) => {
-  const menu = useRef<HTMLDivElement>(null)
-
-  const handleClick = (e: any) => {
-    if (menu && menu.current && menu.current.contains(e.target)) {
-      return
-    }
-
-    switchMenu()
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClick)
-    }
-  }, [])
+  const menuHideRef = useHideOnLostFocus(() => switchMenu())
 
   return (
-    <Menu ref={menu}>
+    <Menu ref={menuHideRef}>
       <Button style={{ marginLeft: 'auto' }} onClick={() => switchMenu()}>
         <CloseIcon />
       </Button>
-
+      <MenuItem>
+        Add Friend <AddFriend />
+      </MenuItem>
       <MenuItem onClick={() => auth.signOut()}>
         LogOut <LogOut />
       </MenuItem>
@@ -67,13 +50,20 @@ const Menu = styled.div`
   border-radius: 1rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 `
+const Icons = css`
+  height: 25px;
+  color: white;
+`
+
 const CloseIcon = styled(Close)`
   height: 25px;
   color: white;
 `
 const LogOut = styled(ArrowRight)`
-  height: 25px;
-  color: white;
+  ${Icons}
+`
+const AddFriend = styled(UserAdd)`
+  ${Icons}
 `
 const MenuItem = styled.div`
   font-size: 1.3rem;
