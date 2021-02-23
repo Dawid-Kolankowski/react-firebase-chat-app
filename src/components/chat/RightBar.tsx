@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const RightBar = () => {
-  return <Container>aa</Container>
+  return <Container />
 }
 
 export default RightBar
@@ -13,6 +13,6 @@ const Container = styled.div`
   flex-basis: auto;
   flex-grow: 1;
   height: 90%;
-  border-radius: 0 1rem 1rem 0;
+  /* border-radius: 0 1rem 1rem 0; */
   padding: 1rem;
 `

@@ -4,19 +4,28 @@ import { Close, ArrowRight, UserAdd } from '@styled-icons/zondicons'
 import { auth } from '../../firebase/firebase'
 import useHideOnLostFocus from '../../hooks/useHideOnLostFocus'
 
-interface IDropdownTypes {
+interface IDropdown {
   switchMenu: () => void
+  switchFriendsMenu: () => void
 }
 
-const DropdownMenu: React.FC<IDropdownTypes> = ({ switchMenu }) => {
-  const menuHideRef = useHideOnLostFocus(() => switchMenu())
+const DropdownMenu: React.FC<IDropdown> = ({
+  switchMenu,
+  switchFriendsMenu,
+}) => {
+  const menuHideRef = useHideOnLostFocus(switchMenu)
 
   return (
     <Menu ref={menuHideRef}>
-      <Button style={{ marginLeft: 'auto' }} onClick={() => switchMenu()}>
+      <Button style={{ marginLeft: 'auto' }} onClick={switchMenu}>
         <CloseIcon />
       </Button>
-      <MenuItem>
+      <MenuItem
+        onClick={() => {
+          switchMenu()
+          switchFriendsMenu()
+        }}
+      >
         Add Friend <AddFriend />
       </MenuItem>
       <MenuItem onClick={() => auth.signOut()}>

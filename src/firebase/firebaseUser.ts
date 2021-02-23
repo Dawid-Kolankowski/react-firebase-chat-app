@@ -25,11 +25,11 @@ export const createUserProfileDoc = async (user: firebase.User) => {
 }
 
 export const getUserDoc = (uid: string) => {
-  if (!uid) return null
-
   return firestore
     .collection('users')
     .doc(uid)
     .get()
-    .then((doc) => doc.data())
+    .then((doc) => {
+      return { id: doc.id, ...doc.data() }
+    })
 }

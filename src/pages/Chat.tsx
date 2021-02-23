@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ChatBox from '../../components/chat/ChatBox'
-import LeftBar from '../../components/chat/LeftBar'
-import RightBar from '../../components/chat/RightBar'
+import ChatBox from '../components/chat/ChatBox'
+import LeftBar from '../components/chat/LeftBar'
+import RightBar from '../components/chat/RightBar'
 
 const Chat: React.FC = () => {
   return (

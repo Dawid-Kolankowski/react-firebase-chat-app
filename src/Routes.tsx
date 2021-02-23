@@ -6,7 +6,7 @@ import { useAuth } from './providers/AuthProvider'
 import Spinner from './components/Spinner'
 import PrivateRoute from './auth/PrivateRoute'
 import PublicRoute from './auth/PublicRoute'
-import Chat from './pages/Chat/Chat'
+import Chat from './pages/Chat'
 
 function Routes() {
   const { loading } = useAuth()

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ChatBox = () => {
-  return <Container>aa</Container>
+  return <Container />
 }
 
 export default ChatBox

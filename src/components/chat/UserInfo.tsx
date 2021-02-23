@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import UserMenu from './UserMenu'
 
 function UserInfo({ userDoc }: firebase.firestore.DocumentData) {
+  console.log(userDoc)
   return (
     <Container border>
       <Container>
