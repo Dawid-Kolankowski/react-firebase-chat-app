@@ -11,11 +11,16 @@ interface IAddFriends {
 const AddFriends: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
   const friendsMenuHideRef = useHideOnLostFocus(switchFriendsMenu)
   const [usersList, setUsersList] = useState<any>([])
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     async function getAllUsers() {
+      if (searchTerm === '') return
       const users = await firestore
         .collection('users')
+        .orderBy('displayName')
+        .startAt(searchTerm)
+        .endAt(`${searchTerm}~`)
         .get()
         .then((snapshot) =>
           snapshot.docs.map((doc) => ({
@@ -26,19 +31,43 @@ const AddFriends: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
       setUsersList(users)
     }
     getAllUsers()
-  }, [])
+  }, [searchTerm])
+
+  console.log(searchTerm)
 
   return (
     <Menu ref={friendsMenuHideRef}>
-      {' '}
-      <Button onClick={switchFriendsMenu}>
-        <CloseIcon />
-      </Button>
+      <Container>
+        {' '}
+        <Input
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+        />
+        <Button onClick={switchFriendsMenu}>
+          <CloseIcon />
+        </Button>
+      </Container>
     </Menu>
   )
 }
 
 export default AddFriends
+
+export const Input = styled.input`
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px;
+
+  background-color: #ceeaf7;
+  border-radius: 0.5rem;
+
+  :focus {
+    outline: none;
+  }
+  ::placeholder {
+    opacity: 0.5;
+  }
+`
 
 const Menu = styled.div`
   width: 100%;
@@ -55,11 +84,11 @@ const Menu = styled.div`
 `
 
 const CloseIcon = styled(Close)`
-  height: 25px;
+  height: 30px;
   color: white;
 `
 const Button = styled.button`
-  margin-left: auto;
+  /* margin-left: auto; */
   background: transparent;
   border: none;
   outline: none;
@@ -67,4 +96,9 @@ const Button = styled.button`
   :hover {
     cursor: pointer;
   }
+`
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
