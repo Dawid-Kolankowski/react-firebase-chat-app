@@ -34,6 +34,6 @@ const Container = styled.div`
   flex-grow: 1;
   background-color: white;
   height: 90%;
-  /* border-radius: 1rem 0 0 1rem; */
+  border-radius: 0.5rem 0 0 0.5rem;
   padding: 1rem;
 `

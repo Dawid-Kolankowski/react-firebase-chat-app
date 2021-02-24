@@ -13,6 +13,6 @@ const Container = styled.div`
   flex-basis: auto;
   flex-grow: 1;
   height: 90%;
-  /* border-radius: 0 1rem 1rem 0; */
+  border-radius: 0 0.5rem 0.5rem 0;
   padding: 1rem;
 `

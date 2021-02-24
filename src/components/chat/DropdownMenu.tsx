@@ -56,7 +56,7 @@ const Menu = styled.div`
   right: 0;
   color: white;
   background-color: #1789fc;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 `
 const Icons = css`
