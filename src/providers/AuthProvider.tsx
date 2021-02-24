@@ -17,6 +17,7 @@ export function createCtx<ContextType>() {
 type AuthProviderType = {
   user: firebase.User | null
   loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 const [useAuth, CtxProvider] = createCtx<AuthProviderType>()
 
@@ -27,14 +28,16 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged((currentUser) => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser)
+      currentUser ? await createUserProfileDoc(currentUser) : null
       setLoading(false)
-      currentUser ? createUserProfileDoc(currentUser) : null
     })
 
     return () => unsubscribeFromAuth()
   }, [])
 
-  return <CtxProvider value={{ user, loading }}>{children}</CtxProvider>
+  return (
+    <CtxProvider value={{ user, loading, setLoading }}>{children}</CtxProvider>
+  )
 }

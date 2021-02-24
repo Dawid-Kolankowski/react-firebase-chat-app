@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { DotsHorizontalTriple } from '@styled-icons/zondicons'
 import DropdownMenu from './DropdownMenu'
-import AddFriends from './AddFriends'
+import AddFriendsMenu from './AddFriendsMenu'
 
 const UserMenu = () => {
   const [menuState, setMenuState] = useState<boolean>(false)
@@ -27,7 +27,7 @@ const UserMenu = () => {
         />
       ) : null}
       {friendState ? (
-        <AddFriends switchFriendsMenu={switchFriendsMenu} />
+        <AddFriendsMenu switchFriendsMenu={switchFriendsMenu} />
       ) : null}
     </>
   )

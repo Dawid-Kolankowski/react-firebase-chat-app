@@ -15,6 +15,7 @@ import {
 } from '../styles/auth'
 import { StyledToastContainer } from '../styles/components'
 import { provider, auth } from '../firebase/firebase'
+import { useAuth } from '../providers/AuthProvider'
 
 const Login: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
@@ -22,14 +23,15 @@ const Login: React.FC = () => {
   const [loadingGoogle, setLoadingGoogle] = useState<boolean>(false)
   const [loadingEmail, setLoadingEmail] = useState<boolean>(false)
   const notify = (message: string) => toast.error(message)
+  const { setLoading } = useAuth()
 
   const logInWithGoogle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     setLoadingGoogle(true)
-
+    setLoading(true)
     auth.signInWithPopup(provider).catch((error) => {
       notify(error.message)
-      setLoadingGoogle(false)
+      setLoading(false)
     })
   }
 
@@ -41,6 +43,7 @@ const Login: React.FC = () => {
       notify("Password or email can't be empty")
       return
     }
+
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       notify(error.message)
       setLoadingEmail(false)

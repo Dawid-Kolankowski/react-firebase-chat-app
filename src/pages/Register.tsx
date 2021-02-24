@@ -14,6 +14,7 @@ import {
 
 import useInput from '../hooks/useInput'
 import { auth } from '../firebase/firebase'
+import { useAuth } from '../providers/AuthProvider'
 
 const Register: React.FC = () => {
   const { value: email, onChange: onChangeEmail } = useInput('')
@@ -23,6 +24,7 @@ const Register: React.FC = () => {
     onChange: onChangeConfirmPassword,
   } = useInput('')
   const notify = (message: string) => toast.error(message)
+  const { setLoading } = useAuth()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -34,9 +36,11 @@ const Register: React.FC = () => {
       notify("Don't leave empty fields!")
       return
     }
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .catch((error) => notify(error.message))
+    setLoading(true)
+    auth.createUserWithEmailAndPassword(email, password).catch((error) => {
+      setLoading(false)
+      notify(error.message)
+    })
   }
 
   return (

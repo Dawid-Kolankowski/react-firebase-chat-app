@@ -26,10 +26,11 @@ const Container = styled('div')<{ border?: boolean }>`
   ${(props) =>
     props?.border &&
     css`
+      padding: 1rem;
+      background-color: #ceeaf7;
+      border-radius: 0.5rem;
       position: relative;
       align-items: center;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid rgba(51, 49, 54, 0.1);
     `}
 `
 
