@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import ChatBox from '../components/chat/ChatBox'
 import LeftBar from '../components/chat/LeftBar'
 import RightBar from '../components/chat/RightBar'
+import { StyledToastContainer } from '../styles/components'
 
 const Chat: React.FC = () => {
   return (
     <Container>
+      <StyledToastContainer />
       <LeftBar />
       <ChatBox />
       <RightBar />

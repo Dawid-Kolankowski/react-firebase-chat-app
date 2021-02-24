@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Close, AddOutline } from '@styled-icons/zondicons'
+import { toast } from 'react-toastify'
 import useHideOnLostFocus from '../../hooks/useHideOnLostFocus'
 import { firestore } from '../../firebase/firebase'
 import { useAuth } from '../../providers/AuthProvider'
@@ -46,6 +47,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
       .collection('pendingRequests')
       .doc(user!.uid)
       .set({ sender: user!.uid })
+      .then(() => toast.success('Request sent!'))
   }
 
   return (
