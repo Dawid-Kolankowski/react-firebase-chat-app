@@ -12,7 +12,7 @@ const UserTile: React.FC<IUser> = ({ onClick, userDoc }) => {
     <Container>
       <ProfilePicture src={`${userDoc.photoURL}`} alt="profile" />
 
-      <h3>{userDoc.displayName}</h3>
+      <Header>{userDoc.displayName}</Header>
       <AddButton onClick={() => onClick(`${userDoc.id}`)}>
         <AddIcon />
       </AddButton>
@@ -24,10 +24,16 @@ export default UserTile
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  background: #ceeaf7;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   margin-bottom: 1rem;
 `
-
+const Header = styled.h3`
+  margin-left: 0.5rem;
+  max-width: 20rem;
+  color: #333136;
+`
 const ProfilePicture = styled.img`
   width: 40px;
   height: 40px;
@@ -35,12 +41,13 @@ const ProfilePicture = styled.img`
 `
 const AddIcon = styled(AddOutline)`
   height: 30px;
-  color: white;
+  color: #333136;
 `
 const AddButton = styled.button`
   background-color: transparent;
   border: none;
   outline: none;
+  margin-left: auto;
   :hover {
     cursor: pointer;
   }

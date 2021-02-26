@@ -7,7 +7,7 @@ function UserInfo({ userDoc }: firebase.firestore.DocumentData) {
   return (
     <Container border>
       <Container>
-        <ProfilePicture src={`${userDoc.photoURL}`} alt="profile" />
+        <ProfilePicture src={userDoc.photoURL} alt="profile" />
 
         <UserName>{userDoc.displayName}</UserName>
       </Container>

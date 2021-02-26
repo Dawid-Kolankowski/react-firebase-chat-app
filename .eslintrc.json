@@ -56,7 +56,9 @@
       "files": ["**/*.tsx"],
       "rules": {
         "react/prop-types": "off",
-        "react/jsx-curly-newline": "off"
+        "react/jsx-curly-newline": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
       }
     }
   ]
