@@ -103,7 +103,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         </Button>
       </Container>
       <UserContainer>
-        {usersList
+        {usersList.length
           ? usersList.map((item: any) => (
               // eslint-disable-next-line react/jsx-indent
               <UserTile

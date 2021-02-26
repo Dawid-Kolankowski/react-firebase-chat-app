@@ -72,13 +72,14 @@ const FriendRequests: React.FC = () => {
 
   return (
     <>
-      <Header>Friend Requests</Header>
-      {requestUsers
-        ? requestUsers.map((item: any) => (
-            // eslint-disable-next-line react/jsx-indent
+      {requestUsers.length ? (
+        <>
+          <Header>Friend Requests</Header>
+          {requestUsers.map((item: any) => (
             <UserTile key={item.id} onClick={acceptRequest} userDoc={item} />
-          ))
-        : null}
+          ))}
+        </>
+      ) : null}
     </>
   )
 }
