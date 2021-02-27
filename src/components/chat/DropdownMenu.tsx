@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import { Close, ArrowRight, UserAdd } from '@styled-icons/zondicons'
 import { auth } from '../../firebase/firebase'
 import useHideOnLostFocus from '../../hooks/useHideOnLostFocus'
+import { useAuth } from '../../providers/AuthProvider'
+import { setOfflineOnClose } from '../../firebase/firebaseUser'
 
 interface IDropdown {
   switchMenu: () => void
@@ -14,6 +16,12 @@ const DropdownMenu: React.FC<IDropdown> = ({
   switchFriendsMenu,
 }) => {
   const menuHideRef = useHideOnLostFocus(switchMenu)
+  const { user } = useAuth()
+
+  const logOut = async () => {
+    setOfflineOnClose(user!.uid)
+    auth.signOut()
+  }
 
   return (
     <Menu ref={menuHideRef}>
@@ -28,7 +36,7 @@ const DropdownMenu: React.FC<IDropdown> = ({
       >
         Add Friend <AddFriend />
       </MenuItem>
-      <MenuItem onClick={() => auth.signOut()}>
+      <MenuItem onClick={logOut}>
         LogOut <LogOut />
       </MenuItem>
     </Menu>

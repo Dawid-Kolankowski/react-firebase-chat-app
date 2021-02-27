@@ -33,3 +33,7 @@ export const getUserDoc = (uid: string) => {
       return { id: doc.id, ...doc.data() }
     })
 }
+
+export const setOfflineOnClose = (id: string) => {
+  firestore.collection('users').doc(id).update({ status: false })
+}

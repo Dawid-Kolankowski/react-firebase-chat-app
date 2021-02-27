@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
-import { auth } from '../firebase/firebase'
+import { auth, firestore } from '../firebase/firebase'
 import { createUserProfileDoc } from '../firebase/firebaseUser'
 
 export function createCtx<ContextType>() {
@@ -30,7 +30,15 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   useEffect(() => {
     const unsubscribeFromAuth = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser)
-      currentUser ? await createUserProfileDoc(currentUser) : null
+      if (currentUser) {
+        await createUserProfileDoc(currentUser)
+
+        firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .update({ status: true })
+      }
+
       setLoading(false)
     })
 

@@ -22,6 +22,7 @@ const FriendRequests: React.FC = () => {
       })
 
     return () => unsubscribeFromFriendRequests()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -43,29 +44,17 @@ const FriendRequests: React.FC = () => {
     const chatRef: any = await firestore.collection('chat').doc()
     chatRef.set({ users: [id, user!.uid] })
 
-    firestore
-      .collection('users')
-      .doc(user!.uid)
-      .collection('pendingRequests')
-      .doc(id)
-      .delete()
+    userRef.doc(user!.uid).collection('pendingRequests').doc(id).delete()
 
-    firestore
-      .collection('users')
-      .doc(user!.uid)
-      .collection('sendRequests')
-      .doc(id)
-      .delete()
+    userRef.doc(user!.uid).collection('sendRequests').doc(id).delete()
 
-    firestore
-      .collection('users')
+    userRef
       .doc(user!.uid)
       .collection('friends')
       .doc(id)
       .set({ friendId: id, chatId: chatRef.id })
 
-    firestore
-      .collection('users')
+    userRef
       .doc(id)
       .collection('friends')
       .doc(user!.uid)
