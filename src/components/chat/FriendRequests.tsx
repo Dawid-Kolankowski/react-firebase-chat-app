@@ -39,7 +39,10 @@ const FriendRequests: React.FC = () => {
     getUsers()
   }, [requestIds])
 
-  const acceptRequest = (id: string) => {
+  const acceptRequest = async (id: string) => {
+    const chatRef: any = await firestore.collection('chat').doc()
+    chatRef.set({ users: [id, user!.uid] })
+
     firestore
       .collection('users')
       .doc(user!.uid)
@@ -59,14 +62,14 @@ const FriendRequests: React.FC = () => {
       .doc(user!.uid)
       .collection('friends')
       .doc(id)
-      .set({ friendId: id })
+      .set({ friendId: id, chatId: chatRef.id })
 
     firestore
       .collection('users')
       .doc(id)
       .collection('friends')
       .doc(user!.uid)
-      .set({ friendId: user!.uid })
+      .set({ friendId: user!.uid, chatId: chatRef.id })
       .then(() => toast.success('Friend added'))
   }
 
