@@ -66,6 +66,7 @@ const Menu = styled.div`
   background-color: #1789fc;
   border-radius: 0.5rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
 `
 const Icons = css`
   height: 25px;

@@ -8,7 +8,8 @@ const ChatBox = () => {
 export default ChatBox
 
 const Container = styled.div`
-  flex: 1;
+  flex: 2;
+  flex-shrink: 0;
   background-color: white;
   height: 90%;
   min-width: 320px;

@@ -16,7 +16,7 @@ const Container = styled.div`
   background-color: white;
   min-width: 280px;
   max-width: 360px;
-  flex: 1 0 auto;
+  flex: 1;
   height: 90%;
   border-radius: 0 0.5rem 0.5rem 0;
   padding: 1rem;

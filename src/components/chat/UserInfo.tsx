@@ -30,6 +30,7 @@ const Container = styled('div')<{ border?: boolean }>`
       border-radius: 0.5rem;
       position: relative;
       align-items: center;
+      margin-bottom: 1rem;
     `}
 `
 
