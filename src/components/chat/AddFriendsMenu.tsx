@@ -28,7 +28,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         .orderBy('displayName')
         .startAt(searchTerm)
         .endAt(`${searchTerm}~`)
-        .limit(10)
+        .limit(5)
         .get()
         .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 

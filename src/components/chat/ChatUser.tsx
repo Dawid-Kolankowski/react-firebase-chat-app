@@ -4,11 +4,12 @@ import styled, { css } from 'styled-components'
 import { firestore } from '../../firebase/firebase'
 import { ChatContext } from '../../providers/ChatProvider'
 
-const ChatUser = ({
-  chatInfo,
-}: {
-  chatInfo: firebase.firestore.DocumentData
-}) => {
+interface IChat {
+  chatId: string
+  friendId: string
+}
+
+const ChatUser = ({ chatInfo }: { chatInfo: IChat }) => {
   const [friend, setFriend] = useState<firebase.firestore.DocumentData>()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const ChatUser = ({
   const { setSelectedChat } = useContext(ChatContext)
 
   return friend ? (
-    <Container onClick={() => setSelectedChat(chatInfo.chatId)}>
+    <Container onClick={() => setSelectedChat(chatInfo)}>
       <ProfilePicture src={friend.photoURL} alt="profile" />
       <UserDetails>
         <h3>

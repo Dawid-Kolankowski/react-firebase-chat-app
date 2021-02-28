@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
 import styled from 'styled-components'
+import { ScrollStyling } from '../../styles/components'
 import { firestore } from '../../firebase/firebase'
 import ChatUser from './ChatUser'
 
+interface IChat {
+  chatId: string
+  friendId: string
+}
+
 const ChatsList = ({ user }: { user: string }) => {
-  const [chats, setChats] = useState<firebase.firestore.DocumentData[]>([])
+  const [chats, setChats] = useState<IChat[]>([])
 
   useEffect(() => {
     const unsubscribe = firestore
@@ -13,7 +19,7 @@ const ChatsList = ({ user }: { user: string }) => {
       .doc(user)
       .collection('friends')
       .onSnapshot((doc) => {
-        const docs = doc.docs.map((item) => item.data())
+        const docs = doc.docs.map((item) => item.data() as IChat)
         setChats(docs)
       })
     return () => unsubscribe()
@@ -22,9 +28,11 @@ const ChatsList = ({ user }: { user: string }) => {
   return (
     <>
       <Header>Friends List</Header>
-      {chats.map((chat) => (
-        <ChatUser key={chat.chatId} chatInfo={chat} />
-      ))}
+      <Container>
+        {chats.map((chat) => (
+          <ChatUser key={chat.chatId} chatInfo={chat} />
+        ))}
+      </Container>
     </>
   )
 }
@@ -33,4 +41,12 @@ export default ChatsList
 
 const Header = styled.h3`
   margin-bottom: 0.5rem;
+`
+
+const Container = styled.div`
+  height: 70%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  ${ScrollStyling}
 `
