@@ -6,23 +6,23 @@ import RightBar from '../components/chat/RightBar'
 import { StyledToastContainer } from '../styles/components'
 import { useAuth } from '../providers/AuthProvider'
 import { setOfflineOnClose } from '../firebase/firebaseUser'
+import ChatProvider from '../providers/ChatProvider'
+import useUnload from '../hooks/useUnload'
 
 const Chat: React.FC = () => {
   const { user } = useAuth()
 
-  const handler = () => setOfflineOnClose(user!.uid)
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', handler)
-    return window.removeEventListener('beforeunload', handler)
-  }, [])
-
+  useUnload(() => {
+    setOfflineOnClose(user!.uid)
+  })
   return (
     <Container>
-      <StyledToastContainer />
-      <LeftBar />
-      <ChatBox />
-      <RightBar />
+      <ChatProvider>
+        <StyledToastContainer />
+        <LeftBar />
+        <ChatBox />
+        <RightBar />
+      </ChatProvider>
     </Container>
   )
 }
