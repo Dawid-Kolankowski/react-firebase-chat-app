@@ -44,6 +44,12 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         .get()
         .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
+      const friends = await usersRef
+        .doc(user!.uid)
+        .collection('friends')
+        .get()
+        .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
+
       const filteredUsers = users.filter((el) => {
         if (el.id === user!.uid) {
           return false
@@ -56,6 +62,11 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         }
         for (let i = 0; i < recivedRequests.length; i += 1) {
           if (recivedRequests[i].id === el.id) {
+            return false
+          }
+        }
+        for (let i = 0; i < friends.length; i += 1) {
+          if (friends[i].id === el.id) {
             return false
           }
         }
@@ -154,6 +165,7 @@ const Menu = styled.div`
   background-color: #1789fc;
   border-radius: 0.5rem;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 `
 
 const CloseIcon = styled(Close)`
