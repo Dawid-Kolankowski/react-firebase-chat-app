@@ -5,6 +5,7 @@ import { firestore } from '../../firebase/firebase'
 import { useAuth } from '../../providers/AuthProvider'
 import { getIdsAndDocs } from '../../utils'
 import UserTile from './UserTile'
+import { ScrollStyling } from '../../styles/components'
 
 const FriendRequests: React.FC = () => {
   const [requestUsers, setRequestUsers] = useState<any>([])
@@ -67,9 +68,11 @@ const FriendRequests: React.FC = () => {
       {requestUsers.length ? (
         <>
           <Header>Friend Requests</Header>
-          {requestUsers.map((item: any) => (
-            <UserTile key={item.id} onClick={acceptRequest} userDoc={item} />
-          ))}
+          <Container>
+            {requestUsers.map((item: any) => (
+              <UserTile key={item.id} onClick={acceptRequest} userDoc={item} />
+            ))}
+          </Container>
         </>
       ) : null}
     </>
@@ -80,4 +83,11 @@ export default FriendRequests
 
 const Header = styled.h2`
   margin-bottom: 1rem;
+`
+
+const Container = styled.div`
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ${ScrollStyling}
 `
