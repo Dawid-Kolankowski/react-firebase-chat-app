@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const useInput = (initialValue: string) => {
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState<any>(initialValue)
 
   return {
     value,

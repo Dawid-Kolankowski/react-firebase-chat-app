@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import ChatBox from '../components/chat/ChatBox'
+import Center from '../components/chat/Center'
 import LeftBar from '../components/chat/LeftBar'
 import RightBar from '../components/chat/RightBar'
 import { StyledToastContainer } from '../styles/components'
@@ -20,7 +20,7 @@ const Chat: React.FC = () => {
       <ChatProvider>
         <StyledToastContainer />
         <LeftBar />
-        <ChatBox />
+        <Center />
         <RightBar />
       </ChatProvider>
     </Container>
