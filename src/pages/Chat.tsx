@@ -12,8 +12,11 @@ import useUnload from '../hooks/useUnload'
 const Chat: React.FC = () => {
   const { user } = useAuth()
 
-  useUnload(() => {
+  useUnload((e: Event) => {
     setOfflineOnClose(user!.uid)
+
+    e.preventDefault()
+    e.returnValue = false
   })
   return (
     <Container>

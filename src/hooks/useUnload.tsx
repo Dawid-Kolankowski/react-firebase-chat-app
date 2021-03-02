@@ -8,7 +8,9 @@ const useUnload = (fn: any) => {
   }, [fn])
 
   useEffect(() => {
-    const onUnload = (...args: any) => cb.current?.(...args)
+    const onUnload = (...args: any) => {
+      cb.current?.(...args)
+    }
 
     window.addEventListener('beforeunload', onUnload)
 

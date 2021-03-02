@@ -10,7 +10,6 @@ const Message = ({
   user: any
   side: boolean
 }) => {
-  console.log(user)
   return (
     <Container>
       <MessageContainer side={side}>{message}</MessageContainer>
