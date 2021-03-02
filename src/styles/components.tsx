@@ -10,7 +10,6 @@ export const StyledToastContainer = styled(ToastContainer)`
 export const ScrollStyling = css`
   ::-webkit-scrollbar {
     width: 4px; /* width of the entire scrollbar */
-    margin-left: -10px;
   }
 
   ::-webkit-scrollbar-track {

@@ -10,7 +10,7 @@ interface IUser {
 const UserTile: React.FC<IUser> = ({ onClick, userDoc }) => {
   return (
     <Container>
-      <ProfilePicture src={`${userDoc.photoURL}`} alt="profile" />
+      <ProfilePicture src={userDoc.photoURL} alt="profile" />
 
       <Header>{userDoc.displayName}</Header>
       <AddButton onClick={() => onClick(`${userDoc.id}`)}>

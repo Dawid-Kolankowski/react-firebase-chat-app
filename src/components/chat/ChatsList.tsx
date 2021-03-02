@@ -44,9 +44,7 @@ const Header = styled.h3`
 `
 
 const Container = styled.div`
-  height: 70%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-
+  overflow: auto;
+  flex: 1;
   ${ScrollStyling}
 `

@@ -34,7 +34,11 @@ const Center = () => {
       {selectedChat.friendId ? (
         <>
           <ChatHeader friendDoc={friendDoc} />
-          <ChatBox />{' '}
+          <ChatBox
+            selectedChatId={selectedChat.chatId}
+            currentUser={currentUserDoc}
+            friend={friendDoc}
+          />{' '}
           <ChatInput
             chatId={selectedChat.chatId}
             currentUser={currentUserDoc}

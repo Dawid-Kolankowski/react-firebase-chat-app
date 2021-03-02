@@ -38,4 +38,6 @@ const Container = styled.div`
   height: 90%;
   border-radius: 0.5rem 0 0 0.5rem;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 `

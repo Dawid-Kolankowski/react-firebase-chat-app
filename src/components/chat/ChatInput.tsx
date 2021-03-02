@@ -33,11 +33,18 @@ const ChatInput = ({
       .collection('messages')
       .doc()
       .set({ message: inputValue, sender: currentUser.id, date: new Date() })
+      .then(() => setInputValue(''))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      sendMessage()
+    }
   }
 
   return (
     <Container>
-      <InputContainer>
+      <InputContainer onKeyDown={handleKeyDown}>
         <Input
           value={inputValue}
           onChange={onInputChange}
