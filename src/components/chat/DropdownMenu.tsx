@@ -5,11 +5,7 @@ import { auth } from '../../firebase/firebase'
 import useHideOnLostFocus from '../../hooks/useHideOnLostFocus'
 import { useAuth } from '../../providers/AuthProvider'
 import { setOfflineOnClose } from '../../firebase/firebaseUser'
-
-interface IDropdown {
-  switchMenu: () => void
-  switchFriendsMenu: () => void
-}
+import { IDropdown } from '../../types'
 
 const DropdownMenu: React.FC<IDropdown> = ({
   switchMenu,

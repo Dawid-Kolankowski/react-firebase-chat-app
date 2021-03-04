@@ -1,15 +1,8 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { IMessageDisplay } from '../../types'
 
-const Message = ({
-  message,
-  user,
-  side,
-}: {
-  message: string
-  user: any
-  side: boolean
-}) => {
+const Message = ({ message, user, side }: IMessageDisplay) => {
   return (
     <Container>
       <MessageContainer side={side}>{message}</MessageContainer>

@@ -8,10 +8,7 @@ import { firestore } from '../../firebase/firebase'
 import { useAuth } from '../../providers/AuthProvider'
 import UserTile from './UserTile'
 import { getIdsAndDocs } from '../../utils'
-
-interface IAddFriends {
-  switchFriendsMenu: () => void
-}
+import { IUser, IChat, IAddFriends } from '../../types'
 
 const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
   const friendsMenuHideRef = useHideOnLostFocus(switchFriendsMenu)
@@ -24,7 +21,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
       if (!searchTerm) return
 
       const usersRef = firestore.collection('users')
-      const users = await usersRef
+      const users: IUser[] = await usersRef
         .orderBy('displayName')
         .startAt(searchTerm)
         .endAt(`${searchTerm}~`)
@@ -44,7 +41,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         .get()
         .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
-      const friends = await usersRef
+      const friends: IChat[] = await usersRef
         .doc(user!.uid)
         .collection('friends')
         .get()
@@ -66,7 +63,7 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
           }
         }
         for (let i = 0; i < friends.length; i += 1) {
-          if (friends[i].id === el.id) {
+          if (friends[i].friendId === el.id) {
             return false
           }
         }
@@ -114,16 +111,15 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
         </Button>
       </Container>
       <UserContainer>
-        {usersList.length
-          ? usersList.map((item: any) => (
-              // eslint-disable-next-line react/jsx-indent
-              <UserTile
-                key={item.id}
-                onClick={sendFriendRequest}
-                userDoc={item}
-              />
-            ))
-          : null}
+        {usersList &&
+          usersList.map((item: any) => (
+            // eslint-disable-next-line react/jsx-indent
+            <UserTile
+              key={item.id}
+              onClick={sendFriendRequest}
+              userDoc={item}
+            />
+          ))}
       </UserContainer>
     </Menu>
   )

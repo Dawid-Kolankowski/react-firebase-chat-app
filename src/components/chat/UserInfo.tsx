@@ -2,8 +2,9 @@ import React from 'react'
 import firebase from 'firebase/app'
 import styled, { css } from 'styled-components'
 import UserMenu from './UserMenu'
+import { IUser } from '../../types'
 
-function UserInfo({ userDoc }: firebase.firestore.DocumentData) {
+function UserInfo({ userDoc }: { userDoc: IUser }) {
   return (
     <Container border>
       <Container>

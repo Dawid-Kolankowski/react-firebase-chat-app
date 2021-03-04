@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { IUser } from '../../types'
 
-const ChatHeader = ({ friendDoc }: { friendDoc: any }) => {
+const ChatHeader = ({ friendDoc }: { friendDoc: IUser }) => {
   return (
     <Container>
       <ProfilePicture src={friendDoc.photoURL} />

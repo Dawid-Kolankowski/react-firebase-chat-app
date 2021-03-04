@@ -5,14 +5,9 @@ import { ScTelegram } from '@styled-icons/evil'
 import useInput from '../../hooks/useInput'
 import EmojiMenu from './EmojiMenu'
 import { firestore } from '../../firebase/firebase'
+import { IChatInput } from '../../types'
 
-const ChatInput = ({
-  chatId,
-  currentUser,
-}: {
-  chatId: string
-  currentUser: any
-}) => {
+const ChatInput = ({ chatId, currentUser }: IChatInput) => {
   const {
     value: inputValue,
     setValue: setInputValue,

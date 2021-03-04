@@ -1,37 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { firestore } from '../../firebase/firebase'
+import { getUserDoc } from '../../firebase/firebaseUser'
 import { ChatContext } from '../../providers/ChatProvider'
 import { useAuth } from '../../providers/AuthProvider'
 import ChatHeader from './ChatHeader'
 import ChatInput from './ChatInput'
 import ChatBox from './ChatBox'
+import { IUser } from '../../types'
 
 const Center = () => {
   const { selectedChat } = useContext(ChatContext)
   const { user } = useAuth()
-  const [currentUserDoc, setCurrentUserDoc] = useState<any>({})
-  const [friendDoc, setFriendDoc] = useState<any>({})
+  const [currentUserDoc, setCurrentUserDoc] = useState<IUser>({} as IUser)
+  const [friendDoc, setFriendDoc] = useState<IUser>({} as IUser)
 
   useEffect(() => {
+    async function getUsers() {
+      setCurrentUserDoc(await getUserDoc(user!.uid))
+      setFriendDoc(await getUserDoc(selectedChat.friendId))
+    }
     if (selectedChat.friendId !== '') {
-      firestore
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((doc) => setCurrentUserDoc({ id: doc.id, ...doc.data() }))
-
-      firestore
-        .collection('users')
-        .doc(selectedChat.friendId)
-        .get()
-        .then((doc) => setFriendDoc({ id: doc.id, ...doc.data() }))
+      getUsers()
     }
   }, [selectedChat])
 
   return (
     <Container>
-      {selectedChat.friendId ? (
+      {selectedChat.friendId && (
         <>
           <ChatHeader friendDoc={friendDoc} />
           <ChatBox
@@ -44,7 +40,7 @@ const Center = () => {
             currentUser={currentUserDoc}
           />
         </>
-      ) : null}
+      )}
     </Container>
   )
 }

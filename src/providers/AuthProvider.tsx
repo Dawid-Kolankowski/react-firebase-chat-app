@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
 import { auth, firestore } from '../firebase/firebase'
 import { createUserProfileDoc } from '../firebase/firebaseUser'
+import { IAuthProvider } from '../types'
 
 export function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined)
@@ -14,12 +15,7 @@ export function createCtx<ContextType>() {
   return [useCtx, ctx.Provider] as const
 }
 
-type AuthProviderType = {
-  user: firebase.User | null
-  loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-}
-const [useAuth, CtxProvider] = createCtx<AuthProviderType>()
+const [useAuth, CtxProvider] = createCtx<IAuthProvider>()
 
 export { useAuth }
 

@@ -3,21 +3,18 @@ import firebase from 'firebase/app'
 import styled, { css } from 'styled-components'
 import { firestore } from '../../firebase/firebase'
 import { ChatContext } from '../../providers/ChatProvider'
-
-interface IChat {
-  chatId: string
-  friendId: string
-}
+import { IChat, IUser } from '../../types'
+import { getIdsAndDocs } from '../../utils'
 
 const ChatUser = ({ chatInfo }: { chatInfo: IChat }) => {
-  const [friend, setFriend] = useState<firebase.firestore.DocumentData>()
+  const [friend, setFriend] = useState<IUser>()
 
   useEffect(() => {
     const unsubscribe = firestore
       .collection('users')
       .doc(chatInfo.friendId)
       .onSnapshot((doc) => {
-        setFriend(doc.data())
+        setFriend(getIdsAndDocs(doc))
       })
     return () => unsubscribe()
   }, [chatInfo.friendId])

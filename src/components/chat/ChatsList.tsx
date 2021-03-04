@@ -4,11 +4,7 @@ import styled from 'styled-components'
 import { ScrollStyling } from '../../styles/components'
 import { firestore } from '../../firebase/firebase'
 import ChatUser from './ChatUser'
-
-interface IChat {
-  chatId: string
-  friendId: string
-}
+import { IChat } from '../../types'
 
 const ChatsList = ({ user }: { user: string }) => {
   const [chats, setChats] = useState<IChat[]>([])

@@ -4,17 +4,10 @@ import firebase from 'firebase/app'
 import { ScrollStyling } from '../../styles/components'
 import { firestore } from '../../firebase/firebase'
 import Message from './Message'
+import { IChatBox, IMessage } from '../../types'
 
-const ChatBox = ({
-  selectedChatId,
-  currentUser,
-  friend,
-}: {
-  selectedChatId: string
-  currentUser: any
-  friend: any
-}) => {
-  const [messages, setMessages] = useState<any>([])
+const ChatBox = ({ selectedChatId, currentUser, friend }: IChatBox) => {
+  const [messages, setMessages] = useState<IMessage[]>([])
 
   useEffect(() => {
     const unsubscribe = firestore
@@ -23,7 +16,7 @@ const ChatBox = ({
       .collection('messages')
       .orderBy('date', 'desc')
       .onSnapshot((doc) => {
-        const docs = doc.docs.map((item) => item.data())
+        const docs = doc.docs.map((item) => item.data() as IMessage)
         setMessages(docs.reverse())
       })
 

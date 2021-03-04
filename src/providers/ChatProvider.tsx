@@ -1,14 +1,5 @@
 import React, { useState, createContext } from 'react'
-
-interface IChat {
-  chatId: string
-  friendId: string
-}
-
-interface IChatProvider {
-  selectedChat: IChat
-  setSelectedChat: React.Dispatch<React.SetStateAction<IChat>>
-}
+import { IChatProvider, IChat } from '../types'
 
 export const ChatContext = createContext<IChatProvider>({} as IChatProvider)
 

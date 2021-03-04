@@ -20,20 +20,19 @@ const UserMenu = () => {
       <Button onClick={switchMenu}>
         <ButtonIcon />
       </Button>
-      {menuState ? (
+      {menuState && (
         <DropdownMenu
           switchMenu={switchMenu}
           switchFriendsMenu={switchFriendsMenu}
         />
-      ) : null}
-      {friendState ? (
-        <AddFriendsMenu switchFriendsMenu={switchFriendsMenu} />
-      ) : null}
+      )}
+      {friendState && <AddFriendsMenu switchFriendsMenu={switchFriendsMenu} />}
     </>
   )
 }
 
 export default UserMenu
+
 const ButtonIcon = styled(DotsHorizontalTriple)`
   width: 30px;
   height: 30px;

@@ -9,12 +9,12 @@ const EmojiMenu = ({
 }: {
   setInputValue: (input: string) => void
 }) => {
-  const [pickerState, setPickerState] = useState(false)
+  const [pickerState, setPickerState] = useState<boolean>(false)
   const pickerRef = useHideOnLostFocus(setPickerState as () => void)
 
   return (
     <>
-      {pickerState ? (
+      {pickerState && (
         <EmojiPicker ref={pickerRef}>
           <Picker
             onEmojiClick={(_event, selectedEmoji) =>
@@ -22,7 +22,7 @@ const EmojiMenu = ({
             }
           />
         </EmojiPicker>
-      ) : null}
+      )}
       <Button onClick={() => setPickerState(!pickerState)}>
         <ButtonIcon />
       </Button>

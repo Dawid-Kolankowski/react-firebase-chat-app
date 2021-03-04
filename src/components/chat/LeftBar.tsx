@@ -5,12 +5,11 @@ import UserInfo from './UserInfo'
 import ChatsList from './ChatsList'
 import { useAuth } from '../../providers/AuthProvider'
 import { getUserDoc } from '../../firebase/firebaseUser'
+import { IUser } from '../../types'
 
 const LeftBar = () => {
   const { user } = useAuth()
-  const [userDoc, setUserDoc] = useState<
-    firebase.firestore.DocumentData | null | undefined
-  >(null)
+  const [userDoc, setUserDoc] = useState<IUser | null>(null)
 
   useEffect(() => {
     async function getDoc() {
@@ -22,7 +21,7 @@ const LeftBar = () => {
 
   return (
     <Container>
-      {userDoc ? <UserInfo userDoc={userDoc} /> : null}
+      {userDoc && <UserInfo userDoc={userDoc} />}
       <ChatsList user={user!.uid} />
     </Container>
   )

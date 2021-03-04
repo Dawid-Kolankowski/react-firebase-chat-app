@@ -6,9 +6,10 @@ import { useAuth } from '../../providers/AuthProvider'
 import { getIdsAndDocs } from '../../utils'
 import UserTile from './UserTile'
 import { ScrollStyling } from '../../styles/components'
+import { IUser } from '../../types'
 
 const FriendRequests: React.FC = () => {
-  const [requestUsers, setRequestUsers] = useState<any>([])
+  const [requestUsers, setRequestUsers] = useState<IUser[]>([])
   const [requestIds, setRequestIds] = useState<any>([])
   const { user } = useAuth()
   const userRef = firestore.collection('users')
@@ -29,14 +30,16 @@ const FriendRequests: React.FC = () => {
   useEffect(() => {
     async function getUsers() {
       const results = await Promise.all(
-        requestIds.map(async (item: any) => {
-          return userRef
-            .doc(item.id)
-            .get()
-            .then((doc) => getIdsAndDocs(doc))
-        }),
+        requestIds.map(
+          async (item: any): Promise<IUser> => {
+            return userRef
+              .doc(item.id)
+              .get()
+              .then((doc) => getIdsAndDocs(doc))
+          },
+        ),
       )
-      setRequestUsers(results)
+      setRequestUsers(results as IUser[])
     }
     getUsers()
   }, [requestIds])

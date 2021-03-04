@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import { firestore } from './firebase'
+import { IUser } from '../types'
 
 export const createUserProfileDoc = async (user: firebase.User) => {
   if (!user || !user.email) return
@@ -24,14 +25,12 @@ export const createUserProfileDoc = async (user: firebase.User) => {
   }
 }
 
-export const getUserDoc = (uid: string) => {
+export const getUserDoc = (uid: string): Promise<IUser> => {
   return firestore
     .collection('users')
     .doc(uid)
     .get()
-    .then((doc) => {
-      return { id: doc.id, ...doc.data() }
-    })
+    .then((doc) => ({ id: doc.id, ...doc.data() } as IUser))
 }
 
 export const setOfflineOnClose = (id: string) => {
