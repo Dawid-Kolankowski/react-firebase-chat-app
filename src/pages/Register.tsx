@@ -25,22 +25,37 @@ const Register: React.FC = () => {
   } = useInput('')
   const notify = (message: string) => toast.error(message)
   const { setLoading } = useAuth()
+  const EMPTY_FIELDS_MESSAGE = "Don't leave empty fields!"
+  const PASSWORD_DO_NOT_MATCH_MESSAGE = 'Password does not match'
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (confirmPassword !== password) {
-      notify('Password does not match')
-      return
-    }
-    if (!password || !confirmPassword || !email) {
-      notify("Don't leave empty fields!")
-      return
-    }
+  const createAccount = () => {
     setLoading(true)
     auth.createUserWithEmailAndPassword(email, password).catch((error) => {
       setLoading(false)
       notify(error.message)
     })
+  }
+
+  const passwordDoNotMatch = () => {
+    return confirmPassword !== password
+  }
+
+  const fieldsAreEmpty = () => {
+    return !password || !confirmPassword || !email
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (fieldsAreEmpty()) {
+      notify(EMPTY_FIELDS_MESSAGE)
+      return
+    }
+    if (passwordDoNotMatch()) {
+      notify(PASSWORD_DO_NOT_MATCH_MESSAGE)
+      return
+    }
+
+    createAccount()
   }
 
   return (

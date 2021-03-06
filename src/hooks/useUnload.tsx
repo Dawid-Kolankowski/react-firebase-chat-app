@@ -1,20 +1,19 @@
 import { useRef, useEffect } from 'react'
 
-const useUnload = (fn: any) => {
-  const cb = useRef(fn)
+const useUnload = (executeOnUnload: any) => {
+  const elementRef = useRef(executeOnUnload)
+  const beforeUnload = 'beforeunload'
 
   useEffect(() => {
-    cb.current = fn
-  }, [fn])
+    elementRef.current = executeOnUnload
+  }, [executeOnUnload])
 
   useEffect(() => {
     const onUnload = (...args: any) => {
-      cb.current?.(...args)
+      elementRef.current?.(...args)
     }
-
-    window.addEventListener('beforeunload', onUnload)
-
-    return () => window.removeEventListener('beforeunload', onUnload)
+    window.addEventListener(beforeUnload, onUnload)
+    return () => window.removeEventListener(beforeUnload, onUnload)
   }, [])
 }
 

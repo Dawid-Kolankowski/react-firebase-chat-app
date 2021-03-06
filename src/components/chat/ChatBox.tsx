@@ -6,7 +6,11 @@ import { firestore } from '../../firebase/firebase'
 import Message from './Message'
 import { IChatBox, IMessage } from '../../types'
 
-const ChatBox = ({ selectedChatId, currentUser, friend }: IChatBox) => {
+const ChatBox: React.FC<IChatBox> = ({
+  selectedChatId,
+  currentUser,
+  friend,
+}) => {
   const [messages, setMessages] = useState<IMessage[]>([])
 
   useEffect(() => {

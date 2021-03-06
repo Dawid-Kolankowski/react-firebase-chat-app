@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { firestore } from '../../firebase/firebase'
 import { getUserDoc } from '../../firebase/firebaseUser'
 import { ChatContext } from '../../providers/ChatProvider'
 import { useAuth } from '../../providers/AuthProvider'
@@ -9,17 +8,18 @@ import ChatInput from './ChatInput'
 import ChatBox from './ChatBox'
 import { IUser } from '../../types'
 
-const Center = () => {
+const ChatSection: React.FC = () => {
   const { selectedChat } = useContext(ChatContext)
   const { user } = useAuth()
   const [currentUserDoc, setCurrentUserDoc] = useState<IUser>({} as IUser)
   const [friendDoc, setFriendDoc] = useState<IUser>({} as IUser)
 
+  async function getUsers() {
+    setCurrentUserDoc(await getUserDoc(user!.uid))
+    setFriendDoc(await getUserDoc(selectedChat.friendId))
+  }
+
   useEffect(() => {
-    async function getUsers() {
-      setCurrentUserDoc(await getUserDoc(user!.uid))
-      setFriendDoc(await getUserDoc(selectedChat.friendId))
-    }
     if (selectedChat.friendId !== '') {
       getUsers()
     }
@@ -45,7 +45,7 @@ const Center = () => {
   )
 }
 
-export default Center
+export default ChatSection
 
 const Container = styled.div`
   flex: 2;

@@ -35,19 +35,25 @@ const Login: React.FC = () => {
     })
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const logInWithEmail = () => {
     setLoadingEmail(true)
-    if (!password || !email) {
-      setLoadingEmail(false)
-      notify("Password or email can't be empty")
-      return
-    }
-
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       notify(error.message)
       setLoadingEmail(false)
     })
+  }
+
+  const fieldsAreEmpty = () => {
+    return !password || !email
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (fieldsAreEmpty()) {
+      notify("Password or email can't be empty")
+      return
+    }
+    logInWithEmail()
   }
   return (
     <Container>

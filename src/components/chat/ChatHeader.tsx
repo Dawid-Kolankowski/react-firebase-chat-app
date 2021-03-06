@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { IUser } from '../../types'
 
-const ChatHeader = ({ friendDoc }: { friendDoc: IUser }) => {
+const ChatHeader: React.FC<{ friendDoc: IUser }> = ({ friendDoc }) => {
   return (
     <Container>
       <ProfilePicture src={friendDoc.photoURL} />

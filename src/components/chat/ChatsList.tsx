@@ -6,7 +6,7 @@ import { firestore } from '../../firebase/firebase'
 import ChatUser from './ChatUser'
 import { IChat } from '../../types'
 
-const ChatsList = ({ user }: { user: string }) => {
+const ChatsList: React.FC<{ user: string }> = ({ user }) => {
   const [chats, setChats] = useState<IChat[]>([])
 
   useEffect(() => {

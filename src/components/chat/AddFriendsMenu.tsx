@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
@@ -16,63 +15,81 @@ const AddFriendsMenu: React.FC<IAddFriends> = ({ switchFriendsMenu }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const { user } = useAuth()
 
-  useEffect(() => {
-    async function searchUsers() {
-      if (!searchTerm) return
+  async function searchUsers() {
+    if (!searchTerm) {
+      return
+    }
 
-      const usersRef = firestore.collection('users')
-      const users: IUser[] = await usersRef
-        .orderBy('displayName')
-        .startAt(searchTerm)
-        .endAt(`${searchTerm}~`)
-        .limit(5)
-        .get()
-        .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
+    const usersRef = firestore.collection('users')
+    const users: IUser[] = await usersRef
+      .orderBy('displayName')
+      .startAt(searchTerm)
+      .endAt(`${searchTerm}~`)
+      .limit(5)
+      .get()
+      .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
-      const sendRequests = await usersRef
-        .doc(user!.uid)
-        .collection('sendRequests')
-        .get()
-        .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
+    const sendRequests = await usersRef
+      .doc(user!.uid)
+      .collection('sendRequests')
+      .get()
+      .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
-      const recivedRequests = await usersRef
-        .doc(user!.uid)
-        .collection('pendingRequests')
-        .get()
-        .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
+    const recivedRequests = await usersRef
+      .doc(user!.uid)
+      .collection('pendingRequests')
+      .get()
+      .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
-      const friends: IChat[] = await usersRef
-        .doc(user!.uid)
-        .collection('friends')
-        .get()
-        .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
+    const friends: IChat[] = await usersRef
+      .doc(user!.uid)
+      .collection('friends')
+      .get()
+      .then((snapshot) => snapshot.docs.map(getIdsAndDocs))
 
-      const filteredUsers = users.filter((el) => {
-        if (el.id === user!.uid) {
+    const filteredUsers = filterUsers(
+      users,
+      sendRequests,
+      recivedRequests,
+      friends,
+    )
+
+    setUsersList(filteredUsers)
+  }
+
+  const filterUsers = (
+    users: IUser[],
+    sendRequests: any,
+    recivedRequests: any,
+    friends: IChat[],
+  ) => {
+    const filteredUsers = users.filter((element) => {
+      if (element.id === user!.uid) {
+        return false
+      }
+
+      for (let i = 0; i < sendRequests.length; i += 1) {
+        if (sendRequests[i].id === element.id) {
           return false
         }
-
-        for (let i = 0; i < sendRequests.length; i += 1) {
-          if (sendRequests[i].id === el.id) {
-            return false
-          }
+      }
+      for (let i = 0; i < recivedRequests.length; i += 1) {
+        if (recivedRequests[i].id === element.id) {
+          return false
         }
-        for (let i = 0; i < recivedRequests.length; i += 1) {
-          if (recivedRequests[i].id === el.id) {
-            return false
-          }
+      }
+      for (let i = 0; i < friends.length; i += 1) {
+        if (friends[i].friendId === element.id) {
+          return false
         }
-        for (let i = 0; i < friends.length; i += 1) {
-          if (friends[i].friendId === el.id) {
-            return false
-          }
-        }
+      }
 
-        return true
-      })
+      return true
+    })
+    return filteredUsers
+  }
 
-      setUsersList(filteredUsers)
-    }
+  useEffect(() => {
     searchUsers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm])

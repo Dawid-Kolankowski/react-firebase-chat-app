@@ -7,7 +7,7 @@ import { useAuth } from '../../providers/AuthProvider'
 import { getUserDoc } from '../../firebase/firebaseUser'
 import { IUser } from '../../types'
 
-const LeftBar = () => {
+const UserSection = () => {
   const { user } = useAuth()
   const [userDoc, setUserDoc] = useState<IUser | null>(null)
 
@@ -27,7 +27,7 @@ const LeftBar = () => {
   )
 }
 
-export default LeftBar
+export default UserSection
 
 const Container = styled.div`
   min-width: 280px;

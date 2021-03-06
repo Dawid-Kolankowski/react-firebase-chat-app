@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import FriendRequests from './FriendRequests'
 
-const RightBar = () => {
+const RequestsSection = () => {
   return (
     <Container>
       <FriendRequests />
@@ -10,7 +10,7 @@ const RightBar = () => {
   )
 }
 
-export default RightBar
+export default RequestsSection
 
 const Container = styled.div`
   background-color: white;

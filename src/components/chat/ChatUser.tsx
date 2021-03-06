@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react'
-import firebase from 'firebase/app'
 import styled, { css } from 'styled-components'
 import { firestore } from '../../firebase/firebase'
 import { ChatContext } from '../../providers/ChatProvider'
 import { IChat, IUser } from '../../types'
 import { getIdsAndDocs } from '../../utils'
 
-const ChatUser = ({ chatInfo }: { chatInfo: IChat }) => {
+const ChatUser: React.FC<{ chatInfo: IChat }> = ({ chatInfo }) => {
   const [friend, setFriend] = useState<IUser>()
 
   useEffect(() => {

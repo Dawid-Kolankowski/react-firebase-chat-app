@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import Center from '../components/chat/Center'
-import LeftBar from '../components/chat/LeftBar'
-import RightBar from '../components/chat/RightBar'
+import ChatSection from '../components/chat/ChatSection'
+import UserSection from '../components/chat/UserSection'
+import RequestsSection from '../components/chat/RequestsSection'
 import { StyledToastContainer } from '../styles/components'
 import { useAuth } from '../providers/AuthProvider'
 import { setOfflineOnClose } from '../firebase/firebaseUser'
@@ -22,9 +22,9 @@ const Chat: React.FC = () => {
     <Container>
       <ChatProvider>
         <StyledToastContainer />
-        <LeftBar />
-        <Center />
-        <RightBar />
+        <UserSection />
+        <ChatSection />
+        <RequestsSection />
       </ChatProvider>
     </Container>
   )

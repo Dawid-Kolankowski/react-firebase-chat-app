@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { ScTelegram } from '@styled-icons/evil'
 import useInput from '../../hooks/useInput'
@@ -7,7 +7,7 @@ import EmojiMenu from './EmojiMenu'
 import { firestore } from '../../firebase/firebase'
 import { IChatInput } from '../../types'
 
-const ChatInput = ({ chatId, currentUser }: IChatInput) => {
+const ChatInput: React.FC<IChatInput> = ({ chatId, currentUser }) => {
   const {
     value: inputValue,
     setValue: setInputValue,
@@ -17,7 +17,6 @@ const ChatInput = ({ chatId, currentUser }: IChatInput) => {
   useEffect(() => {
     setInputValue('')
   }, [chatId])
-
   const sendMessage = () => {
     if (!inputValue) {
       return
